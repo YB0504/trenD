@@ -34,14 +34,14 @@
 	<%--글 관련 JS--%>
 	<script>
 		function updateForm() {
-			location.href = "/trend/commUpdateForm?trNo=${post.trNo}"
+			location.href = "/commUpdateForm?trNo=${post.trNo}"
 		}
 
 		function deletePost() {
 			var check = confirm('글을 삭제하시겠습니까?');
 
 			if (check) {
-				location.href = "/trend/deletePost?trNo=${post.trNo}"
+				location.href = "/deletePost?trNo=${post.trNo}"
 				alert('글이 삭제되었습니다.');
 			}
 		}
@@ -483,7 +483,15 @@
 							<li class="breadcrumb-item"><a href="#" onclick="goBack()">목록</a></li>
 							<script>
 								function goBack() {
-									window.history.back();
+
+
+									if(${post.categoryVO.cateCd eq "t"}){
+										location.href = "trend/posts"
+									}else{
+										location.href = "community/posts"
+									}
+
+
 								}
 							</script>
 						</ol>

@@ -78,62 +78,32 @@
 
 function detail(a,b){
 	const value = b
-	
-	//var category = encodeURIComponent(a);	//  /이 포함된 문자열을 전송하려면 인코딩이 필요. String과 달리 jsp의 변수들은 문자열을 통으로 변환 불가
-	//하지만 인코딩을 하게 되면 /이 포함된 문자열이 저장된 변수는 오류를 발생시킴. 왜
+
 	var category = a;
 	
 	
 	$.ajax({
-		type : "get",	//post 방식 요청. @postmapping으로 받게 됨
+		type : "get",
 		url : "${pageContext.request.contextPath}/StatisticsDetail/"+value,
-		//${pageContext.request.contextPath}는 프로젝트명. /StatisticsDetail는 공통코드. 컨트롤러로 연결. /StatisticsDetail은 요청명
-		//다만 컨트롤러 아래에 메소드가 하나뿐이라면 이런 식으로 처리할 필요는 없음
-		//컨트롤러에 @RequestMapping("/StatisticsDetail")처럼 맵핑을 하지 않고, 메소드에 달린 @RequestMapping 경로로 바로 요청하면 됨
-		
-		//url : "${pageContext.request.contextPath}/StatisticsDetail/"+category+"/"+value,
-		//url 주소에 변수를 전달할 때, 전송하려는 변수 내부에 /가 포함되면 해당 변수를 경로의 일부로 인식하게 됨
-		//자바에선 String 변수를 통해 /을 포함한 문자열을 전송할 수 있지만, 자바스크립트에선 String 변수를 사용하는 것이 불가능
-		//이 문제를 해결하려면 어떻게?
-		data : {"category":category},	///가 포함된 문자열을 전송해야 하는 category는 json을 통해 전송
-		//json을 통해 전송된 데이터는 @PathVariable이 아닌 @RequestParam 매개변수로 받아줘야 함
-		
-		//공통된 요청 이름값 StatisticsDetail는 @requestMapping으로 받고 있음
-		//공통 요청은 requestMapping(컨트롤러)로 받고, 그 아래에 postMapping/getMapping 등이 달린 메소드 존재
-		//링크를 통한 값 전달. 컨트롤러에서는 /StatisticsDetail/{category}/{value}와 같은 모양으로 값들을 받게 됨
-		
-		//contentType: 'application/json',  	// 데이터 타입을 JSON으로 설정
-		//data : JSON.stringify(detail),  	// 데이터를 JSON 문자열로 변환하여 전송
-		//json 데이터가 아닐 땐 modelattrribute 로 받음. json은 @requestBody로 DTO(DTO가 아니어도 됨. 다량의 데이터를 전달하는 법) 안에 바로 저장시킴
-		
-		//서버와 클라이언트 간 페이지 변경 없이 @requestBody로만 값을 주고받게 됨
+		data : {"category":category},
+
 		success : function(result){
 			$("#container").hide()
-			$("#container1").empty()	//호출될 때마다 #container1의 내용을 비운다. 따라서 다시 호출됐을 때 그림이 덧그려지지 않게 됨
-										//ajax 안에 있는 게 훨씬 깔끔. 메소드 호출 시점에 비워버리면 비는ㄴ 순간이 보여버림
-			// create pie chart with passed data
+			$("#container1").empty()
+
 	 	    var chart1 = anychart.pie(result.list);
-	 	 	//데이터를 '문자열',숫자  이런 식으로 받네??
-	 	 			
-	 	 	// configure tooltips
+
 	 		chart1.tooltip().format("접속횟수:{%value}");
 
-	 	    // set chart title text settings
 	 	    chart1
 	 	      .title(result.value+' 별 통계')
-	 	      // set chart radius
 	 	      .radius('43%')
-	 	      // create empty area in pie chart
-	 	      .innerRadius('30%');
-	 	    
-	 	    // set container id for the chart
+	  	      .innerRadius('30%');
+
 	 	    chart1.container('container1');
 	 	   $("#container1").show()					
 	 	   $("button").show()
-	 	  	  chart1.draw();  //이 메소드가 작동하면 그래프 그림이 그려짐(여러 개의 명령이 동시에 작동하진 않음)
-	 	  	  				  //따라서 버튼 클릭 시 detail 함수를 호출하게 되면, container1 영역에 또 하나의 그림이 그려지는 것
-	 	  	  				  //그 아래의 button 영역은 덮어씌워버림. 따라서 hide() 메소드의 실행은 의미 없음. 해당 메소드는 단지 태그 내용을 가리는 것뿐
-	 	  	  				  //그림을 지우는 메소드가 없을까?
+	 	  	  chart1.draw();
 	 	   
 	 	    // initiate chart drawing
 	 	    

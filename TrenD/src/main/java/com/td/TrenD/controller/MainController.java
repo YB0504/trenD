@@ -46,6 +46,7 @@ public class MainController {
 
     @RequestMapping("/")
     public String main() {
+        System.out.println("MainController.main");
         return "main/main";
     }
 
