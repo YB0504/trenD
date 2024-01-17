@@ -12,7 +12,7 @@ Google Trends 데이터를 이용해 실시간 정보를 불러오며 사용자�
 의견이 일정 갯수 이상 등록이 되면 성별, 나이, 지역에 대한 통계가 출력됩니다.<br><br>
 
 ### 개발 기간
-22.12.18 - 23.01.17 (30일)<br><br>
+23.12.18 - 24.01.17 (30일)<br><br>
 
 ### 프로젝트 구조도
 <img width="max" alt="KakaoTalk_Photo_2024-01-15-12-32-31" src="https://github.com/Meimeidays/trenD/assets/55777781/89bb7582-c0da-422b-a557-fa3f12473500">
